@@ -14,7 +14,7 @@ while maintaining all the goodness of immutable data structures.
 
 ```js
 import Immutable from 'immutable';
-import ImmutableGeoJSON, {Point} from 'immutable-geo-json';
+import ImmutableGeoJSON, {Point} from 'immutable-geojson';
 
 const pointA = ImmutableGeoJSON.fromJS({"type": "Point", "coordinates": [100.0, 0.0]});
 const type = pointA.type // access to fields via dot syntax thanks to immutable records
