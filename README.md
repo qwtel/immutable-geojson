@@ -1,4 +1,4 @@
-# immutable-js-geojson
+# immutable-geojson
 Immutable.js Record for GeoJSON
 
 This library defines a [Immutable.js Record][record] for GeoJSON data.
