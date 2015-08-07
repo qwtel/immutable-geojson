@@ -1,5 +1,5 @@
 {
-  "name": "immutable-js-geojson",
+  "name": "immutable-geojson",
   "version": "0.1.0",
   "description": "Immutable.js Record for GeoJSON",
   "main": "lib/index.js",
