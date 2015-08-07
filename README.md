@@ -8,7 +8,7 @@ while maintaining all the goodness of immutable data structures.
 
 ## Install
 
-TODO
+`npm install --save immutable-geojson`
 
 ## Usage
 
