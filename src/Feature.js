@@ -1,6 +1,6 @@
 import Immutable, {Record, List, Map} from 'immutable';
 
-import Geometry from './Geometry.js';
+import geometry from './geometry.js';
 
 const DEFAULT_VALUES = {
   type: 'Feature',
@@ -14,7 +14,7 @@ const _Feature = Record(DEFAULT_VALUES, 'Feature');
 function Feature(values = DEFAULT_VALUES, propertiesReviver = undefined) {
   const feature = {...values};
 
-  if (values.geometry) feature.geometry = Geometry(values.geometry);
+  if (values.geometry) feature.geometry = geometry(values.geometry);
   if (values.properties) feature.properties = Immutable.fromJS(values.properties, propertiesReviver);
 
   return _Feature(feature);
