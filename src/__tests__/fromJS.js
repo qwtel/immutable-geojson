@@ -1,4 +1,4 @@
-import {Collection, Record, List} from 'immutable';
+import Immutable, {Collection, Record, List} from 'immutable';
 
 import ImmutableGeoJSON, {Point, LineString} from '../index.js'
 
@@ -39,6 +39,11 @@ describe('GeoJson', () => {
       expect(lng).toEqual(100.0);
       expect(lat).toEqual(0.0);
     });
+
+    it ('should support access via bracket syntax', () => {
+      expect(point.coordinates[0]).toEqual(100.0);
+      expect(point.coordinates[1]).toEqual(0.0);
+    })
   });
 
   describe('LineString', () => {
@@ -247,5 +252,11 @@ describe('GeoJson', () => {
     it('should have a line string as second geometry', () => {
       expect(geometryCollection.geometries.get(1) instanceof LineString).toBe(true);
     });
+  });
+
+  it ('should be comparable via `Immutable.is`', () => {
+    const pointA = ImmutableGeoJSON.fromJS({"type": "Point", "coordinates": [100.0, 0.0]});
+    const pointB = ImmutableGeoJSON.fromJS({"type": "Point", "coordinates": [100.0, 0.0]});
+    expect(Immutable.is(pointA, pointB)).toBe(true);
   });
 });

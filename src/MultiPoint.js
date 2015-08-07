@@ -1,5 +1,7 @@
 import {Record, List} from 'immutable';
 
+import CoordList from './CoordList.js';
+
 const DEFAULT_VALUES = {
   type: "MultiPoint",
   coordinates: List(),
@@ -10,7 +12,7 @@ const _MultiPoint = Record(DEFAULT_VALUES, 'MultiPoint');
 function MultiPoint(values = DEFAULT_VALUES) {
   const multiPoint = {...values};
 
-  multiPoint.coordinates = List(values.coordinates.map(List));
+  multiPoint.coordinates = List(values.coordinates.map(CoordList));
 
   return _MultiPoint(multiPoint);
 }
