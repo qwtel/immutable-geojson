@@ -1,6 +1,6 @@
-import Immutable, {Collection, Record, List} from 'immutable';
+import Immutable, {Collection, Iterable, Record, List, Map} from 'immutable';
 
-import ImmutableGeoJSON, {Point, LineString} from '../index.js'
+import ImmutableGeoJSON, {Point, LineString, Feature} from '../index.js'
 
 describe('GeoJson', () => {
   it('should be defined', () => {
@@ -40,7 +40,7 @@ describe('GeoJson', () => {
       expect(lat).toEqual(0.0);
     });
 
-    it ('should support access via bracket syntax', () => {
+    it('should support access via bracket syntax', () => {
       expect(point.coordinates[0]).toEqual(100.0);
       expect(point.coordinates[1]).toEqual(0.0);
     })
@@ -254,7 +254,149 @@ describe('GeoJson', () => {
     });
   });
 
-  it ('should be comparable via `Immutable.is`', () => {
+  describe('Feature', () => {
+    const feature = ImmutableGeoJSON.fromJS({
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [102.0, 0.5]},
+      "properties": {"prop0": "value0"},
+    });
+
+    it('should not be null', () => {
+      expect(feature).not.toBeNull();
+    });
+
+    it('should have a Point geometry', () => {
+      expect(feature.geometry instanceof Point).toBe(true);
+    });
+
+    it('should have a properties of type Map', () => {
+      expect(feature.properties instanceof Collection).toBe(true);
+      expect(feature.properties instanceof Map).toBe(true);
+    });
+
+    it('should have the correct property', () => {
+      expect(feature.properties.get('prop0')).toBe('value0');
+    });
+
+    it('should no id by default', () => {
+      expect(feature.id).not.toBeDefined();
+    });
+
+    it('should allow null values for `geometry` and `properties`', () => {
+      const feature = ImmutableGeoJSON.fromJS({
+        "type": "Feature",
+        "geometry": null,
+        "properties": null,
+      });
+
+      expect(feature).toBeDefined();
+      expect(feature.geometry).toBeNull();
+      expect(feature.properties).toBeNull();
+    });
+
+
+    it('should have an id if defined in the original JSON', () => {
+      const feature = ImmutableGeoJSON.fromJS({
+        "type": "Feature",
+        "id": "test"
+      });
+
+      expect(feature.id).toBe('test');
+    });
+  });
+
+  describe('Feature with property reviver', () => {
+    const PropRecord = Record({
+      'prop0': undefined,
+    });
+
+    function propertyReviver(key, value) {
+      if (key === '') return PropRecord(value);
+      return value;
+    }
+
+    const feature = ImmutableGeoJSON.fromJS({
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [102.0, 0.5]},
+      "properties": {"prop0": "value0"},
+    }, propertyReviver);
+
+    it('should have properties of the correct type', () => {
+      expect(feature.properties instanceof PropRecord).toBe(true);
+    });
+
+    it('should have properties with the correct value', () => {
+      expect(feature.properties.prop0).toBe('value0');
+    });
+  });
+
+  describe('FeatureCollection', () => {
+    const PropRecord = Record({
+      'prop0': undefined,
+      'prop1': undefined,
+    });
+
+    function propertyReviver(key, value) {
+      if (key === '') return PropRecord(value);
+      return Iterable.isIndexed(value) ? value.toList() : value.toMap();
+    }
+
+    const featureCollection = ImmutableGeoJSON.fromJS({
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "geometry": {"type": "Point", "coordinates": [102.0, 0.5]},
+          "properties": {"prop0": "value0"},
+        },
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0],
+            ],
+          },
+          "properties": {
+            "prop0": "value0",
+            "prop1": 0.0,
+          },
+        },
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [[100.0, 0.0], [101.0, 0.0], [101.0, 1.0],
+                [100.0, 1.0], [100.0, 0.0]],
+            ],
+          },
+          "properties": {
+            "prop0": "value0",
+            "prop1": {"this": "that"},
+          },
+        },
+      ],
+    }, propertyReviver);
+
+    it('should not be null', () => {
+      expect(featureCollection).not.toBeNull();
+    });
+
+    it('should have a features list', () => {
+      expect(featureCollection.features).toBeDefined();
+      expect(featureCollection.features instanceof List).toBeTruthy();
+      expect(featureCollection.features.size).toBe(3);
+      expect(featureCollection.features.first() instanceof Feature).toBeTruthy();
+    });
+
+    it('should pass the property reviver', () => {
+      expect(featureCollection.features.first().properties instanceof PropRecord).toBeTruthy();
+      expect(featureCollection.features.first().properties.prop0).toBe('value0');
+    });
+  });
+
+  it('should be comparable via `Immutable.is`', () => {
     const pointA = ImmutableGeoJSON.fromJS({"type": "Point", "coordinates": [100.0, 0.0]});
     const pointB = ImmutableGeoJSON.fromJS({"type": "Point", "coordinates": [100.0, 0.0]});
     expect(Immutable.is(pointA, pointB)).toBe(true);
