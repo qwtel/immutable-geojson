@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/qwtel/immutable-js-geojson.git"
+    "url": "git+https://github.com/qwtel/immutable-geojson.git"
   },
   "keywords": [
     "immutable",
@@ -19,9 +19,9 @@
   "author": "Florian Klampfer <f.klampfer@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/qwtel/immutable-js-geojson/issues"
+    "url": "https://github.com/qwtel/immutable-geojson/issues"
   },
-  "homepage": "https://github.com/qwtel/immutable-js-geojson#readme",
+  "homepage": "https://github.com/qwtel/immutable-geojson#readme",
   "peerDependencies": {
     "immutable": ">=3.7.4"
   },
