@@ -1,0 +1,35 @@
+{
+  "name": "immutable-js-geojson",
+  "version": "0.1.0",
+  "description": "Immutable.js Record for GeoJSON",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "babel src --watch --out-dir lib",
+    "test": "jest lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qwtel/immutable-js-geojson.git"
+  },
+  "keywords": [
+    "immutable",
+    "immutablejs",
+    "geojson"
+  ],
+  "author": "Florian Klampfer <f.klampfer@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/qwtel/immutable-js-geojson/issues"
+  },
+  "homepage": "https://github.com/qwtel/immutable-js-geojson#readme",
+  "peerDependencies": {
+    "immutable": ">=3.7.4"
+  },
+  "devDependencies": {
+    "babel": "^5.8.21",
+    "jest-cli": "^0.4.18"
+  },
+  "jest": {
+    "unmockedModulePathPatterns": ["<rootDir>"]
+  }
+}
