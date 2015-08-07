@@ -1,19 +1,14 @@
 import {Collection, Record, List} from 'immutable';
 
-import GeoJson from '../GeoJson.js'
-
-import Point from '../Point.js';
-import LineString from '../LineString.js';
+import ImmutableGeoJSON, {Point, LineString} from '../index.js'
 
 describe('GeoJson', () => {
-  const GeoJson = require('../GeoJson.js');
-
   it('should be defined', () => {
-    expect(GeoJson).toBeDefined();
+    expect(ImmutableGeoJSON.fromJS).toBeDefined();
   });
 
   describe('Point', () => {
-    const point = GeoJson({"type": "Point", "coordinates": [100.0, 0.0]});
+    const point = ImmutableGeoJSON.fromJS({"type": "Point", "coordinates": [100.0, 0.0]});
 
     it('should not be null', () => {
       expect(point).not.toBeNull();
@@ -47,7 +42,7 @@ describe('GeoJson', () => {
   });
 
   describe('LineString', () => {
-    const lineString = GeoJson({
+    const lineString = ImmutableGeoJSON.fromJS({
       "type": "LineString",
       "coordinates": [[100.0, 0.0], [101.0, 1.0]],
     });
@@ -74,7 +69,7 @@ describe('GeoJson', () => {
   });
 
   describe('Polygon without holes', () => {
-    const polygon = GeoJson({
+    const polygon = ImmutableGeoJSON.fromJS({
       "type": "Polygon",
       "coordinates": [
         [[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]],
@@ -113,7 +108,7 @@ describe('GeoJson', () => {
   });
 
   describe('Polygon with holes', () => {
-    const polygon = GeoJson({
+    const polygon = ImmutableGeoJSON.fromJS({
       "type": "Polygon",
       "coordinates": [
         [[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]],
@@ -160,7 +155,7 @@ describe('GeoJson', () => {
   });
 
   describe('MultiPoint', () => {
-    const multiPoint = GeoJson({
+    const multiPoint = ImmutableGeoJSON.fromJS({
       "type": "MultiPoint",
       "coordinates": [[100.0, 0.0], [101.0, 1.0]],
     });
@@ -173,7 +168,7 @@ describe('GeoJson', () => {
   });
 
   describe('MultiLineString', () => {
-    const multiLineString = GeoJson({
+    const multiLineString = ImmutableGeoJSON.fromJS({
       "type": "MultiLineString",
       "coordinates": [
         [[100.0, 0.0], [101.0, 1.0]],
@@ -196,7 +191,7 @@ describe('GeoJson', () => {
   });
 
   describe('MultiPolygon', () => {
-    const multiPolygon = GeoJson({
+    const multiPolygon = ImmutableGeoJSON.fromJS({
       "type": "MultiPolygon",
       "coordinates": [
         [[[102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0]]],
@@ -223,7 +218,7 @@ describe('GeoJson', () => {
   });
 
   describe('GeometryCollection', () => {
-    const geometryCollection = GeoJson({
+    const geometryCollection = ImmutableGeoJSON.fromJS({
       "type": "GeometryCollection",
       "geometries": [
         {

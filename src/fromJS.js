@@ -6,7 +6,7 @@ import GeometryCollection from './GeometryCollection.js';
 
 import geometry from './geometry.js';
 
-function GeoJson(geoJson) {
+function fromJS(geoJson) {
   switch(geoJson.type) {
     case 'FeatureCollection':
       return FeatureCollection(geoJson);
@@ -19,4 +19,4 @@ function GeoJson(geoJson) {
   }
 }
 
-export default GeoJson;
+export default fromJS;
