@@ -1,4 +1,4 @@
-# immutable-geojson
+# Immutable GeoJSON
 Immutable.js Record for GeoJSON
 
 This library defines a [Immutable.js Record][record] for GeoJSON data.
@@ -35,6 +35,7 @@ Most notably their fields can't be accesed via bracket syntax (i.e. `geometry.co
 
 However, since `Immutable.List` implements ES6 iterators, 
 it is possible to access the coordinates via destructuring in ES6:
+
 ```js
 for (let lineString of geometry.coordinates) {
   for (let [lng, lat] of lineString) {
@@ -48,8 +49,8 @@ Since the structure of the `properties` field of [GeoJSON Features][feature] can
 it uses a generic `Immutable.Map` to store the values as an `Immutable.Collection` 
 (so that comparisons via `Immutable.is` don't depend on identical references).
 
-If you wan't to use records for the properties as well, you can provide a `reviver` as second parameter to `fromJS`
-(similar to `fromJS` in Imutable.js)
+If you want to use records for the properties as well, you can provide a `reviver` as second parameter to `fromJS`
+(similar to `fromJS` in Immutable.js)
 
 
 [record]: https://facebook.github.io/immutable-js/docs/#/Record
