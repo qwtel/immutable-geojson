@@ -11,11 +11,11 @@ const DEFAULT_VALUES = {
 
 const _Feature = Record(DEFAULT_VALUES, 'Feature');
 
-function Feature(values = DEFAULT_VALUES) {
+function Feature(values = DEFAULT_VALUES, propertiesReviver = undefined) {
   const feature = {...values};
 
   feature.geometry = Geometry(values.geometry);
-  feature.properties = Immutable.fromJS(values.properties);
+  feature.properties = Immutable.fromJS(values.properties, propertiesReviver);
 
   return _Feature(feature);
 }

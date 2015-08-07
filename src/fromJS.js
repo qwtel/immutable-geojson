@@ -6,12 +6,12 @@ import GeometryCollection from './GeometryCollection.js';
 
 import geometry from './geometry.js';
 
-function fromJS(geoJson) {
+function fromJS(geoJson, propertiesReviver) {
   switch(geoJson.type) {
     case 'FeatureCollection':
-      return FeatureCollection(geoJson);
+      return FeatureCollection(geoJson, propertiesReviver);
     case 'Feature':
-      return Feature(geoJson);
+      return Feature(geoJson, propertiesReviver);
     case 'GeometryCollection':
       return GeometryCollection(geoJson);
     default:

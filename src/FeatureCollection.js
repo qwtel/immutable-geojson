@@ -9,10 +9,10 @@ const DEFAULT_VALUES = {
 
 const _FeatureCollection = Record(DEFAULT_VALUES, 'FeatureCollection');
 
-function FeatureCollection(values = DEFAULT_VALUES) {
+function FeatureCollection(values = DEFAULT_VALUES, propertiesReviver = undefined) {
   const featureCollection = {...values};
 
-  featureCollection.features = List(values.features.map(Feature));
+  featureCollection.features = List(values.features.map(feature => Feature(feature, propertiesReviver)));
 
   return _FeatureCollection(featureCollection);
 }
