@@ -1,24 +1,13 @@
-import {Record, List} from 'immutable';
+import {List} from 'immutable';
+import NestableRecord from 'immutable-nestable-record';
 
 import CoordList from './CoordList.js';
 
-const DEFAULT_VALUES = {
+const LineString = NestableRecord({
   type: "LineString",
   coordinates: List(),
-};
-
-const _LineString = Record(DEFAULT_VALUES, 'LineString');
-
-function LineString(values = DEFAULT_VALUES) {
-  const lineString = {...values};
-
-  lineString.coordinates = List(values.coordinates.map(CoordList));
-
-  return _LineString(lineString);
-}
-
-LineString.prototype = _LineString.prototype;
-LineString.prototype.constructor = LineString;
+}, {
+  coordinates: [List, CoordList],
+}, 'LineString');
 
 export default LineString;
-

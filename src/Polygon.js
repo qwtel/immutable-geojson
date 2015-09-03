@@ -1,24 +1,13 @@
-import {Record, List} from 'immutable';
+import {List} from 'immutable';
+import NestableRecord from 'immutable-nestable-record';
 
 import CoordList from './CoordList.js';
 
-const DEFAULT_VALUES = {
+const Polygon = NestableRecord({
   type: 'Polygon',
   coordinates: List(),
-};
-
-const _Polygon = Record(DEFAULT_VALUES, 'Polygon');
-
-function Polygon(values = DEFAULT_VALUES) {
-  const polygon = {...values};
-
-  polygon.coordinates = List(values.coordinates.map(polygon => List(polygon.map(CoordList))));
-
-  return _Polygon(polygon);
-}
-
-Polygon.prototype = _Polygon.prototype;
-Polygon.prototype.constructor = Polygon;
+}, {
+  coordinates: [List, List, CoordList],
+}, 'Polygon');
 
 export default Polygon;
-

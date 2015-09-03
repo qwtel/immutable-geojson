@@ -1,24 +1,13 @@
-import {Record, List} from 'immutable';
+import {List} from 'immutable';
+import NestableRecord from 'immutable-nestable-record';
 
 import CoordList from './CoordList.js';
 
-const DEFAULT_VALUES = {
+const MultiPoint = NestableRecord({
   type: "MultiPoint",
   coordinates: List(),
-};
-
-const _MultiPoint = Record(DEFAULT_VALUES, 'MultiPoint');
-
-function MultiPoint(values = DEFAULT_VALUES) {
-  const multiPoint = {...values};
-
-  multiPoint.coordinates = List(values.coordinates.map(CoordList));
-
-  return _MultiPoint(multiPoint);
-}
-
-MultiPoint.prototype = _MultiPoint.prototype;
-MultiPoint.prototype.constructor = MultiPoint;
+}, {
+  coordinates: [List, CoordList],
+}, 'MultiPoint');
 
 export default MultiPoint;
-

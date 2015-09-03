@@ -1,24 +1,13 @@
-import {Record, List} from 'immutable';
+import {List} from 'immutable';
+import NestableRecord from 'immutable-nestable-record';
 
 import CoordList from './CoordList.js';
 
-const DEFAULT_VALUES = {
+const MultiLineString = NestableRecord({
   type: 'MultiLineString',
   coordinates: List(),
-};
-
-const _MultiLineString = Record(DEFAULT_VALUES, 'MultiLineString');
-
-function MultiLineString(values = DEFAULT_VALUES) {
-  const multiLineString = {...values};
-
-  multiLineString.coordinates = List(values.coordinates.map(lineString => List(lineString.map(CoordList))));
-
-  return _MultiLineString(multiLineString);
-}
-
-MultiLineString.prototype = _MultiLineString.prototype;
-MultiLineString.prototype.constructor = MultiLineString;
+}, {
+  coordinates: [List, List, CoordList],
+}, 'MultiLineString');
 
 export default MultiLineString;
-
