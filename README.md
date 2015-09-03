@@ -8,7 +8,7 @@ while maintaining all the goodness of immutable data structures.
 
 ## Install
 
-`npm install --save immutable-geojson`
+`npm install immutable-geojson`
 
 ## Usage
 
@@ -30,10 +30,10 @@ There are two issues that prevent if from being a complete replacement:
 
 ### Access to coordinates
 Since coordinates are arrays in the GeoJSON spec, they are converted to `Immutable.List`s.
-However, immutable lists are not equivalent to arrays. 
+However, immutable lists are not equivalent to arrays.
 Most notably their fields can't be accesed via bracket syntax (i.e. `geometry.coordinates[0]`).
 
-However, since `Immutable.List` implements ES6 iterators, 
+However, since `Immutable.List` implements ES6 iterators,
 it is possible to access the coordinates via destructuring in ES6:
 
 ```js
@@ -45,8 +45,8 @@ for (let lineString of geometry.coordinates) {
 ```
 
 ### Feature properties
-Since the structure of the `properties` field of [GeoJSON Features][feature] can't be known in advance, 
-it uses a generic `Immutable.Map` to store the values as an `Immutable.Collection` 
+Since the structure of the `properties` field of [GeoJSON Features][feature] can't be known in advance,
+it uses a generic `Immutable.Map` to store the values as an `Immutable.Collection`
 (so that comparisons via `Immutable.is` don't depend on identical references).
 
 If you want to use records for the properties as well, you can provide a `reviver` as second parameter to `fromJS`
