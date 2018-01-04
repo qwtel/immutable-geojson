@@ -1,4 +1,6 @@
 # Immutable GeoJSON
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/qwtel/immutable-geojson.svg)](https://greenkeeper.io/)
 Immutable.js Record for GeoJSON
 
 This library defines a [Immutable.js Record][record] for GeoJSON data.
